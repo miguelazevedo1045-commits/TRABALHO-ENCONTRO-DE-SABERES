@@ -1,0 +1,5 @@
+{
+  "name": "AI Language Quiz",
+  "description": "An interactive language learning application inspired by Duolingo. It uses AI to generate an endless stream of quizzes for various languages and topics, providing instant feedback and explanations.",
+  "requestFramePermissions": []
+}
