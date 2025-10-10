@@ -1,11 +1,10 @@
 
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI, Type, Chat } from "@google/genai";
 import { Language, Topic, QuizQuestion } from '../types';
 
-if (!process.env.API_KEY) {
-    throw new Error("API_KEY environment variable is not set");
-}
-
+// FIX: Updated API key handling to align with @google/genai guidelines.
+// The API key must be obtained from `process.env.API_KEY` and is assumed to be
+// configured in the execution environment.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const quizQuestionSchema = {
@@ -64,4 +63,17 @@ export async function generateQuizQuestion(language: Language, topic: Topic): Pr
     console.error("Erro ao gerar pergunta do quiz:", error);
     throw new Error("Não foi possível gerar uma nova pergunta. Tente novamente.");
   }
+}
+
+export function createChatSession(language: Language): Chat {
+  const systemInstruction = `Você é um tutor de ${language} amigável e paciente. Seu objetivo é ter uma conversa natural com um estudante de nível intermediário. Responda sempre em ${language}. Se o estudante cometer um erro de gramática ou usar uma frase que soe pouco natural, primeiro responda à pergunta ou comentário dele de forma útil e natural. Depois, em um novo parágrafo, ofereça uma correção de forma gentil e encorajadora. Por exemplo: "A propósito, uma forma mais comum de dizer isso seria: '[frase corrigida]'. Mas seu ponto foi perfeitamente claro!". Mantenha suas respostas relativamente curtas para incentivar um diálogo.`;
+
+  const chat = ai.chats.create({
+    model: 'gemini-2.5-flash',
+    config: {
+      systemInstruction: systemInstruction,
+      temperature: 0.8,
+    },
+  });
+  return chat;
 }

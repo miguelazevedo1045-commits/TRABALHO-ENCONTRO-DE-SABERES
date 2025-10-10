@@ -10,6 +10,7 @@ export enum Language {
 export enum Topic {
   Grammar = 'Gramática',
   Writing = 'Escrita',
+  Chat = 'Conversação',
 }
 
 export interface QuizQuestion {

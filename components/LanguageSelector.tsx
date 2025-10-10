@@ -4,16 +4,16 @@ import { Language, Topic } from '../types';
 import { LANGUAGES, TOPICS } from '../constants';
 
 interface LanguageSelectorProps {
-  onStartQuiz: (language: Language, topic: Topic) => void;
+  onStartSession: (language: Language, topic: Topic) => void;
 }
 
-const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onStartQuiz }) => {
+const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onStartSession }) => {
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
 
   const handleStart = () => {
     if (selectedLanguage && selectedTopic) {
-      onStartQuiz(selectedLanguage, selectedTopic);
+      onStartSession(selectedLanguage, selectedTopic);
     }
   };
 
@@ -48,7 +48,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onStartQuiz }) => {
         {selectedLanguage && (
           <section className="mb-8 animate-fade-in">
             <h2 className="text-2xl font-semibold mb-4 text-slate-700 dark:text-slate-200">2. Escolha um tópico</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {TOPICS.map((topic) => (
                 <button
                   key={topic.id}
@@ -72,7 +72,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ onStartQuiz }) => {
             onClick={handleStart}
             className="w-full max-w-xs mx-auto bg-green-500 text-white font-bold py-4 px-6 rounded-xl hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800 transition-all duration-300 transform hover:scale-105 shadow-lg animate-fade-in"
           >
-            Iniciar Quiz!
+            Iniciar Sessão!
           </button>
         )}
       </main>
